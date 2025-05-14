@@ -34,8 +34,3 @@ jobs:
         echo "Running custom linting script..."
         dotnet format --check
 
-    - name: Upload Test Results
-      uses: actions/upload-pages-artifact@v3
-      with:
-        name: test-results
-        path: '**/TestResults/*.trx'
