@@ -1,4 +1,4 @@
-name: Build 
+name: Build and Test
 
 on:
   push:
@@ -20,14 +20,9 @@ jobs:
       with:
         dotnet-version: '8.0.x'
 
-    - name: Restore dependencies
-      run: dotnet restore
-
-    - name: Build
-      run: dotnet build --no-restore --configuration Release
-
-    - name: Custom Script - Linting
+    - name: Build and Test
       run: |
-        echo "Running custom linting script..."
-        dotnet format --check
+        dotnet restore
+        dotnet build --no-restore --configuration Release
+        dotnet test --no-build --verbosity normal
 
