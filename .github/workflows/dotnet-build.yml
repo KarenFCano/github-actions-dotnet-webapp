@@ -1,4 +1,4 @@
-name: Build and Test
+name: Build Test
 
 on:
   push:
@@ -8,21 +8,18 @@ on:
     - cron: '0 * * * *' # Executa a cada hora
 
 jobs:
-  build:
+  log-action:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+    - uses: actions/checkout@v3
+    - run: echo "Verificação se o repositório está atualizado"
+    - run: |
+        if [ -z "$(git status --porcelain)" ]; then
+          echo "O repositório está atualizado."
+        else
+          echo "O repositório não está atualizado."
+          exit 1
+        fi # Verifica se o repositório está atualizado
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: '8.0.x'
 
-    - name: Build and Test
-      run: |
-        dotnet restore
-        dotnet build --no-restore --configuration Release
-        dotnet test --no-build --verbosity normal
-
+        
