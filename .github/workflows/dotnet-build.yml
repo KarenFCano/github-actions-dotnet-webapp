@@ -1,4 +1,3 @@
-# Workflow 1: Build and Test
 name: Build and Test
 
 on:
@@ -35,3 +34,8 @@ jobs:
         echo "Running custom linting script..."
         dotnet format --check
 
+    - name: Upload Test Results
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-results
+        path: '**/TestResults/*.trx'
